@@ -1,5 +1,8 @@
 <form method='POST'> {% csrf_token %}
     {{ form.as_p }}
     <button type='submit' class='btn btn-secondary'>{% if btn_label %}
-        {{btn_label}} {% else %}Save{% endif %}</button>
+        {{btn_label}} {% else %}Login{% endif %}</button>
 </form>
+<a href="/accounts/google/login/callback">
+
+    google</a>

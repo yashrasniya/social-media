@@ -7,7 +7,12 @@
     {% if description %}
     <p>{{ description }} </p>
     {% endif %}
-    {% include "bass_componant/form.html" with form=form btn_label=btn_label %}
+    {% if user.is_authenticated %}<a href="/logout">
+   <button type='submit' class='btn btn-secondary' >Logout</button></a>
+    {% else %}
+     {% include "bass_componant/form.html" with form=form btn_label=btn_label %}
+
+    {% endif %}
 
 </div>
 

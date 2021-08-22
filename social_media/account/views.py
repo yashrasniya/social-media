@@ -17,7 +17,7 @@ def user_login(requst):
         'but_label': "login",
         'title': login
     }
-    return render(requst, 'account/auth.html', context)
+    return render(requst, 'login_template/index.html', context)
 def user_logout(requst):
     if requst.method=='POST':
         logout(requst)

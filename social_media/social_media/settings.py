@@ -182,11 +182,11 @@ DEFAULT_RENDERER_CLASSES = ['rest_framework.renderers.JSONRenderer']
 
 REST_FRAMEWORK_authentication = [
             'rest_framework.authentication.SessionAuthentication',
-            'rest_framework.authentication.TokenAuthentication',
+            # 'rest_framework.authentication.TokenAuthentication',
 ]
 if DEBUG:
     DEFAULT_RENDERER_CLASSES.append('rest_framework.renderers.BrowsableAPIRenderer')
-    DEFAULT_RENDERER_CLASSES.append('social_media.dev.authentication.Authentication')
+    # DEFAULT_RENDERER_CLASSES.append('social_media.dev.authentication.Authentication')
 
 
 REST_FRAMEWORK = {
