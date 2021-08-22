@@ -1,0 +1,14 @@
+
+<div class="row">
+<div class="mb-5 col-md-4 mx-auto">
+    <form  method="post" class="form" id="post-creating-form"action="/api/post_upload">
+     {% csrf_token %}
+
+        <input type="hidden" value="/" name="next"/>
+  <textarea class="form-control "  rows="3" maxlength="199" required="" name="post_description" ></textarea>
+        <input type="file" name="photo" id = "id_photo "accept="image/*" required="">
+
+    <input type="submit" class="btn btn-warning btn-primary btn" >
+        </form>
+</div>
+</div>

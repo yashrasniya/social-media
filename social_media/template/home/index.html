@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% block title %}
+ASH
+{%endblock %}
+{% block content %}
+
+<div class="card-title btn d-flex justify-content-center">
+
+         {% if user.is_authenticated %}
+    <h1 class="card-title text-secondary" id="wellcome">Welcome {{user}}</h1></div>
+{% else %}
+<a href="/accounts/google/login">
+<div>
+ <h1 class="card-title text-secondary" id="wellcome">Welcome</h1>
+</div>
+    </a>
+</div>
+
+{% endif %}
+
+
+{% endblock  %}
+{% block js %}
+
+ {% include 'react/react_tem.html'%}
+
+
+  <div id="root"></div>
+<div id="post" class="row row-cols-1 row-cols-md-2 g-4 d-flex justify-content-center ">
+
+</div>
+<script>
+function handleSubmitDid(event)
+{
+    event.preventDefault()
+    const myForm = event.target
+    const myFormData= new FormData(event.target)
+    const url = myForm.getAttribute("action")
+    const method = myForm.getAttribute("method")
+    const xhr = new XMLHttpRequest()
+    const responseType="json"
+    xhr.responseType=responseType
+    xhr.open(method,url)
+    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH","XMLHttpRequest")
+    xhr.setRequestHeader("X-Requested-With" ,"XMLHttpRequest")
+  console.log(myFormData)
+    xhr.onload = function()
+    {
+                if (xhr.status === 201)
+                {
+                    const serverResponse =xhr.response
+                    const newPostHtmlEl=serialize(serverResponse)
+                    const ogHtml = allPostContainerElement.innerHTML
+                    allPostContainerElement.innerHTML =newPostHtmlEl+ogHtml
+                    myForm.reset()
+                }
+                else if(xhr.status === 400)
+                {
+                const errorJson= xhr.response
+                console.log(errorJson)
+                }
+                else if (xhr.status=== 403)
+                {
+                alert("login")
+                window.location.href ="/login"
+                }
+                else if(xhr.status=== 500)
+                {
+                alert("something went wrong in server!,pzz try again")
+                }
+    }
+    xhr.onerror = function()
+    {
+    alert("something went wrong")
+    }
+    xhr.send(myFormData)
+}
+const postCreateEl=document.getElementById("post-creating-form")
+postCreateEl.addEventListener("submit",handleSubmitDid)
+const allPostContainerElement=document.getElementById("post")
+const wellcomeElement=document.getElementById("welcome")
+
+
+function loadPost(allPostContainerElement)
+{
+    const xml = new XMLHttpRequest()
+    const method ='GET'
+    const url ="api/post_detial_view/"
+    const responseType="json"
+    xml.responseType=responseType
+    xml.open(method,url)
+    xml.onload = function()
+    {
+        const serverResponse =xml.response
+
+
+        const listedItems = serverResponse
+
+        var string=""
+        for (var i=listedItems.length-1;i>0;i--)
+        {
+
+            var carString=serialize(listedItems[i])
+            string+=carString
+        }
+        allPostContainerElement.innerHTML=string
+        }
+    xml.send()
+}
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function HandelDidAction(post_id,action)
+
+{
+
+    const url ="api/post/action"
+    const method ="POST"
+    const data = JSON.stringify(
+    {
+    id: post_id,
+    action:action
+    }
+    )
+    const csrftoken = getCookie('csrftoken');
+    const xhr = new XMLHttpRequest()
+    xhr.open(method,url)
+    xhr.setRequestHeader("Content-Type","application/json")
+    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH","XMLHttpRequest")
+    xhr.setRequestHeader("X-Requested-With" ,"XMLHttpRequest")
+    xhr.setRequestHeader("X-CSRFToken" ,csrftoken)
+    xhr.onload = function(){
+        if (xhr.status===403){
+            const error=xhr.response
+            alert(error)
+            window.location.href ="/admin"
+        }
+        loadPost(allPostContainerElement)
+        }
+    xhr.onerror= function(){
+        alert(xhr.response)
+
+
+    }
+    xhr.send(data)
+
+
+}
+
+/**
+ * @return {string}
+ */
+function LikeButton(Post)
+{
+    return "<button type='button' class='btn btn-warning btn-primary btn ' onclick=HandelDidAction("+ Post.id +",'like')>"+
+    Post.likes+" like</button>"
+}
+
+/**
+ * @return {string}
+ */
+function UnlikeButton(Post)
+{
+    return "<button type='button' class='btn btn-warning btn-primary btn ' onclick=HandelDidAction("+ Post.id +",'unlike')>"+
+    Post.likes+" unlike</button>"
+}
+function commendButton(Post)
+{
+    return "<button type='button' class='btn btn-warning btn-primary btn ' onclick=HandelDidAction("+Post.id+",'comment')> comment</button>"
+}
+function serialize(listedItems)
+{
+    return "  <div class='col'>"+
+       " <div class='card'>"+
+          "<a href='/post/"+listedItems.id+"'><img src='"+listedItems.photo+ "'class='card-img-top'   alt='...'></a>"+
+         " <div class='card-body'>"+
+            "<p class='card-text' >"+listedItems.post_description+"</div>"+
+            LikeButton(listedItems)+UnlikeButton(listedItems)+commendButton(listedItems)+
+        "</div>"
+}
+loadPost(allPostContainerElement)
+
+
+</script>
+
+
+{% endblock %}

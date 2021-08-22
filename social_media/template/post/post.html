@@ -1,0 +1,136 @@
+{% extends  'base.html' %}
+{% block post %}
+<div class=" mb-1 col-md-4 mx-auto ">
+
+<div class="col m-3 ">
+<div class="card  ">
+<img src="{{data.photo}}" class="card-img-top m-1">
+    <div class="row m-3">
+    <div class="col-9 ">
+<h4 class="card-text col-auto">{{data.post_description}}</h4></div>
+<div class="col-3 text-right">
+    <input type="checkbox" class="btn-check" id='btncheck{{data.id}}' autocomplete='off'/>
+  <label class="btn btn-outline-primary" for='btncheck{{data.id}}'><h6>likes {{data.likes}}</h6></label>
+</div>
+        </div>
+
+<div>
+
+
+        <form id="comment-creating-form">
+            {% csrf_token %}
+            <div class=" p-2 m-3 card">
+                <div class="row m-2">
+            <div class="col">
+            <input type="text" name="comment" class="col-12 mt-1" required=""></div>
+        <div class="col-auto text-right  ">
+<div class="text-right">
+            <input type="submit" name="DoComment"  class="btn border rounded-pill  " value="comment"></div></div> </div>
+
+</form>
+     <div id="comment"></div>
+    </div>
+</div>
+    </div>
+</div>
+<script>
+const postCreateEl=document.getElementById("comment-creating-form")
+postCreateEl.addEventListener("submit",handleCommentSending)
+
+const commentLikes=document.getElementById("like-button")
+<!--commentLikes.addEventListener("like-button",handleCommentLiker)-->
+
+    function handleCommentLiker(event){
+        event.preventDefault()
+        console.log(event)
+
+    }
+    function handleCommentShow(allCommentElement)
+    {
+
+        const xhr= new XMLHttpRequest()
+        xhr.responseType='json'
+        xhr.open('GET',"http://127.0.0.1:8000/api/post/data/{{data.id}}")
+        xhr.onload=function(){
+            const serverResponse =xhr.response
+            console.log("hi",serverResponse.post_comment)
+
+            allCommentElement.innerHTML=commentLoop(serverResponse.post_comment)
+    }
+        xhr.send()
+    }
+    function arrayShoting(array){
+        let twoArray=[...array]
+        console.log(twoArray)
+        var new_array=[];
+        for(var i=0;i< twoArray.length;i++){
+        var lowest=-1;
+        var index=-1;
+        var data;
+            for(var j=0;j<twoArray.length;j++){
+
+            for(var z=0;z<new_array.length;z++){
+            console.log(z)
+                if(z!=0){console.log(z)
+                if(new_array[z].id != twoArray[j].id){
+                if (lowest<twoArray[j].id){
+                lowest=twoArray[j].id
+                data=twoArray[j]
+                index=j
+                console.log(z)
+                }}
+                else{
+                lowest=0
+                }
+                }
+
+
+            }
+            }
+            new_array[new_array.length]=data
+
+            }
+            console.log(twoArray)
+            return new_array
+    }
+    function commentLoop(array){
+        var string=''
+        for(var i=1;i< array.length+1;i++){
+            var tempString=commentSerialize(array[array.length-i])
+            string+=tempString
+    }
+
+        return string
+    }
+    function commentSerialize(comment){
+        return "<div class='m-3 card p-2'><div class='row'><div class='col-10  '><div class='text-left'><p class='text-left' >"+comment.comment+"</p></div></div><div class='col '><a href='' class='text-right' name='like-button' post-id="+comment.id+" >like</a></div></div></div>"
+    }
+
+const allCommentElement=document.getElementById("comment")
+handleCommentShow(allCommentElement)
+
+    function handleCommentSending(event){
+        event.preventDefault()
+        console.log(event.target)
+        const myFormData= new FormData(event.target)
+        console.log(myFormData)
+        const xhr= new XMLHttpRequest()
+        xhr.responseType='json'
+        xhr.open('POST',"http://127.0.0.1:8000/api/post/data/4")
+        xhr.onload=function(){
+            const serverResponse =xhr.response
+            console.log(serverResponse)
+            handleCommentShow(allCommentElement)
+            event.target.reset()
+        }
+        myFormData.append('post',{{data.id}})
+        xhr.send(myFormData)
+
+    }
+
+</script>
+
+</div>
+
+
+{% endblock post %}

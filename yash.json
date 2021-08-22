@@ -1,0 +1,32 @@
+{
+	"q": [{user:8440929628,page_id:bcp1uh,app_id:936619743392459,
+      device_id:C7EF9E57-E627-4409-8F83-A4511206C386,
+      posts:[[ods:incr,{key:web.mqtt.mqtt_client_publish},1621406537258,0]],
+      trigger:pigeon,
+      send_method:ajax}],
+
+
+
+
+
+	"ts": "1621406541798"
+}  
+1621406860676
+
+
+{app_uid:8440929628,app_id:936619743392459,app_ver:1.0.0,data:[{time:1621408316.856,name:instagram_web_direct,extra:{ig_userid:8440929628,pk:8440929628,
+  rollout_hash:52aa6db90924,frontend_env:prod,app_id:936619743392459,event_name:direct_emoji_options_click,mqtt_data:{},
+  referrer:/direct/t/--sanitized--,referrer_domain:www.instagram.com,url:/direct/t/--sanitized--,original_referrer:null,o…on_not_connected,event_type:mqtt_client_publish,
+  app_id:936619743392459,online:true},referrer:/direct/t/--sanitized--,referrer_domain:www.instagram.com,url:/direct/t/--sanitized--,original_referrer:null,
+  original_referrer_domain:}}],log_type:client_event,seq:92,session_id:1798354949f-7e0bb1,device_id:C7EF9E57-E627-4409-8F83-A4511206C386,
+  claims:[hmac.AR3_r5JIO5fRmL7_JNQJNeWfepZhlPJKGWJkdG1vWyr6y_NI]}
+
+{"app_uid":"8440929628","app_id":"936619743392459","app_ver":"1.0.0","data":[{"time":1621408816.54,"name":"instagram_web_time_spent_bit_array",
+  "extra":{"ig_userid":8440929628,"pk":8440929628,"rollout_hash":"52aa6db90924","frontend_env":"prod","app_id":"936619743392459","tos_id":"wdb0dc",
+    "start_time":1621408813,"tos_array":[15,0],"tos_len":4,"tos_seq":7,"tos_cum":23,"log_time":1621408816539,"referrer":"/direct/t/--sanitized--",
+    "referrer_domain":"www.instagram.com","url":"/direct/t/--sanitized--","original_referrer":null,"original_referrer_domain":""}},
+  {"time":1621408816.588,"name":"instagram_web_direct","extra":{"ig_userid":8440929628,"pk":8440929628,"rollout_hash":"52aa6db90924",
+    "frontend_env":"prod","app_id":"936619743392459","event_name":"direct_emoji_options_click","mqtt_data":"{}",
+    "referrer":"/direct/t/--sanitized--","referrer_domain":"www.instagram.com","url":"/direct/t/--sanitized--",
+    "original_referrer":null,"original_referrer_domain":""}}],"log_type":"client_event","seq":109,
+  "session_id":"1798354949f-7e0bb1","device_id":"C7EF9E57-E627-4409-8F83-A4511206C386","claims":["hmac.AR3_r5JIO5fRmL7_JNQJNeWfepZhlPJKGWJkdG1vWyr6y_NI"]}
