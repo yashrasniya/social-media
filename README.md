@@ -1,2 +1,2 @@
 # social-media
-[link](yashraniya.pythonanywhere.com/)
+[link](https://yashraniya.pythonanywhere.com/)
